@@ -120,6 +120,9 @@ public class LinkedList {
 	 *        the given memory block
 	 */
 	public void addFirst(MemoryBlock block) {
+		if (size == 0) {
+			first = new Node(block);
+		}
 		Node toAdd = new Node(block);
 		toAdd.next = this.first;
 		this.first = toAdd;
