@@ -57,8 +57,21 @@ public class MemorySpace {
 	 *        the length (in words) of the memory block that has to be allocated
 	 * @return the base address of the allocated block, or -1 if unable to allocate
 	 */
-	public int malloc(int length) {		
-		//// Replace the following statement with your code
+	public int malloc(int length) {
+		Node current = this.freeList.getFirst();
+		while (current != null) {
+			if (current.block.length >= length) {
+				MemoryBlock toAllocate = new MemoryBlock(current.block.baseAddress, length);
+				if (current.block.length == length) {
+					this.freeList.remove(current);
+				} else {
+					current.block.baseAddress += length;
+				}
+				this.allocatedList.addLast(toAllocate);
+				return toAllocate.baseAddress;
+			}
+			current = current.next;
+		}
 		return -1;
 	}
 
@@ -71,7 +84,13 @@ public class MemorySpace {
 	 *            the starting address of the block to freeList
 	 */
 	public void free(int address) {
-		//// Write your code here
+		Node current = this.allocatedList.getFirst();
+		while (current.block.baseAddress != address) {
+			current = current.next;
+		}
+		MemoryBlock toFree = new MemoryBlock(current.block.baseAddress, current.block.length);
+		this.allocatedList.remove(toFree);
+		this.freeList.addLast(toFree);
 	}
 	
 	/**
@@ -88,6 +107,21 @@ public class MemorySpace {
 	 * In this implementation Malloc does not call defrag.
 	 */
 	public void defrag() {
-		//// Write your code here
+		Node prev = this.freeList.getFirst();
+		if (this.freeList.getSize() < 2) {
+			return;
+		}
+		Node current = prev.next;
+		while (prev != null) {
+			while (current != null) {
+				if (prev.block.baseAddress + prev.block.length == current.block.baseAddress) {
+					prev.block.length += current.block.length;
+					this.freeList.remove(current);
+					current = prev.next;
+				}
+			}
+			prev = current;
+			current = current.next;
+		}
 	}
 }
