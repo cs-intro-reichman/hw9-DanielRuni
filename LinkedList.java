@@ -89,7 +89,7 @@ public class LinkedList {
 		}
 		if (index == 0) {
 			addFirst(block);
-		} else if (index == this.size) {
+		} else if (index == this.size - 1) {
 			addLast(block);
 		} else {
 			Node current = first;
@@ -152,11 +152,8 @@ public class LinkedList {
 	 *         if index is negative or greater than or equal to size
 	 */
 	public MemoryBlock getBlock(int index) {
-		if (index < 0 || index > size) {
+		if (index < 0 || index > size || size == 0) {
 			throw new IllegalArgumentException("index must be between 0 and size");
-		}
-		if (size == 0) {
-			return null;
 		}
 		Node current = this.first;
 		while (index > 0) {
