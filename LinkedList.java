@@ -235,7 +235,7 @@ public class LinkedList {
 	 */
 	public void remove(int index) {
 		if (index < 0 || index >= size) {
-			throw new IllegalArgumentException(" IllegalArgumentException: index must be between 0 and size");
+			throw new IllegalArgumentException(" index must be between 0 and size");
 		}
 		if (index == 0) {
 			first = first.next;
@@ -266,7 +266,7 @@ public class LinkedList {
 	 */
 	public void remove(MemoryBlock block) {
 		if (block == null) {
-			throw new IllegalArgumentException(" IllegalArgumentException: index must be between 0 and size");
+			throw new IllegalArgumentException(" index must be between 0 and size");
 		}
 		if (size == 0) {
 			return;
