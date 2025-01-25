@@ -193,19 +193,16 @@ public class LinkedList {
 	public void remove(Node node) {
 		if (size == 0) {
 			return;
+		} else if (size == 1) {
+			if (this.first.equals(node)) {
+				this.first = null;
+				size -- ;
+				return;
+			} else {
+				return;
+			}
 		}
 		Node prev = this.first;
-		if(prev.equals(node) && size < 2) {
-			first = null;
-			size -- ;
-			return;
-		} else if (prev.equals(node)) {
-			first = first.next;
-			size -- ;
-			return;
-		} else if (size < 2) {
-			return;
-		}
 		Node current = prev.next;
 		while (current != null) {
 			if (current.equals(node)) {
@@ -213,6 +210,8 @@ public class LinkedList {
 				size -- ;
 				return;
 			}
+			prev = current;
+			current = current.next;
 		}
 	}
 
@@ -227,24 +226,18 @@ public class LinkedList {
 		if (index < 0 || index >= size) {
 			throw new IllegalArgumentException("index must be between 0 and size");
 		}
-		if (size == 0) {
-			return;
-		}
 		if (index == 0) {
 			first = first.next;
 			size -- ;
 			return;
 		}
-		if (size < 2) {
-			return;
-		}
-		Node prev = this.first;
-		while (index > 0) {
-			prev = prev.next;
+		Node current = first;
+		while (index > 1) {
+			current = current.next;
 			index -- ;
-		} 
-		prev.next = prev.next.next;
-		size -- ;
+		}
+		current.next = current.next.next;
+		size --;
 	}
 
 	/**
@@ -255,24 +248,28 @@ public class LinkedList {
 	 *         if the given memory block is not in this list
 	 */
 	public void remove(MemoryBlock block) {
-		Node prev = this.first;
-		if (prev.block.equals(block)) {
-			first = first.next;
+		if (size == 0) {
 			return;
+		} else if (size == 1) {
+			if (first.block.equals(block)) {
+				first = null;
+				size -- ;
+				return;
+			} else {
+				return;
+			}
 		}
-		if (this.size < 2) {
-			return;
-		}
+		Node prev = first;
 		Node current = prev.next;
 		while (current != null) {
 			if (current.block.equals(block)) {
 				prev.next = current.next;
+				size -- ;
 				return;
 			}
 			prev = current;
 			current = current.next;
 		}
-		throw new IllegalArgumentException("block is not in he list");
 	}	
 
 	/**
