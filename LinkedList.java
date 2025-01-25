@@ -237,7 +237,8 @@ public class LinkedList {
 		if (index < 0 || index >= size) {
 			throw new IllegalArgumentException("index must be between 0 and size");
 		}
-		if (index == 0) {
+		int copyIndex = index;
+		if (copyIndex == 0) {
 			first = first.next;
 			size -- ;
 			if (size == 0) {
@@ -246,9 +247,9 @@ public class LinkedList {
 			return;
 		}
 		Node current = first;
-		while (index > 1) {
+		while (copyIndex > 1) {
 			current = current.next;
-			index -- ;
+			copyIndex -- ;
 		}
 		if (index == size - 1) {
 			last = current;
@@ -277,7 +278,7 @@ public class LinkedList {
 				size -- ;
 				return;
 			} else {
-				return;
+				throw new IllegalArgumentException("index must be between 0 and size");
 			}
 		} else if (first.block.equals(block)) {
 			first = first.next;
