@@ -58,7 +58,7 @@ public class MemorySpace {
 	 * @return the base address of the allocated block, or -1 if unable to allocate
 	 */
 	public int malloc(int length) {
-		if (this.freeList == null) {
+		if (this.freeList == null || this.freeList.getFirst() == null)  {
 			return -1;
 		}
 		Node current = this.freeList.getFirst();
