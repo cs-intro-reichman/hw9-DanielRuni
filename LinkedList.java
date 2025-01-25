@@ -191,11 +191,12 @@ public class LinkedList {
 	 *        the node that will be removed from this list
 	 */
 	public void remove(Node node) {
-		if (size == 0) {
+		if (size == 0 || node.equals(null)) {
 			return;
 		} else if (size == 1) {
 			if (this.first.equals(node)) {
 				this.first = null;
+				this.last = first;
 				size -- ;
 				return;
 			} else {
@@ -248,11 +249,12 @@ public class LinkedList {
 	 *         if the given memory block is not in this list
 	 */
 	public void remove(MemoryBlock block) {
-		if (size == 0) {
+		if (size == 0 || block.equals(null)) {
 			return;
 		} else if (size == 1) {
 			if (first.block.equals(block)) {
 				first = null;
+				last = first;
 				size -- ;
 				return;
 			} else {
