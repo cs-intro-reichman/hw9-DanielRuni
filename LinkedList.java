@@ -57,8 +57,9 @@ public class LinkedList {
 			return null;
 		}
 		Node current = this.first;
-		for (int i=0; i<=index; i++) {
+		while (index > 0) {
 			current = current.next;
+			index -- ;
 		}
 		return current;
 	}
@@ -113,10 +114,11 @@ public class LinkedList {
 		if (size == 0) {
 			this.first = new Node(block);
 			last = first;
+		} else {
+			Node toAdd = new Node(block);
+			last.next = toAdd;
+			last = toAdd;
 		}
-		Node toAdd = new Node(block);
-		last.next = toAdd;
-		last = toAdd;
 	}
 	
 	/**
@@ -130,10 +132,11 @@ public class LinkedList {
 		if (size == 0) {
 			first = new Node(block);
 			last = first;
+		}else {
+			Node toAdd = new Node(block);
+			toAdd.next = this.first;
+			this.first = toAdd;
 		}
-		Node toAdd = new Node(block);
-		toAdd.next = this.first;
-		this.first = toAdd;
 	}
 
 	/**
