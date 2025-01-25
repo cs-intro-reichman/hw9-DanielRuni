@@ -100,8 +100,8 @@ public class LinkedList {
 			Node toAdd = new Node(block);
 			toAdd.next = current.next;
 			current.next = toAdd;
+			size ++ ;
 		}
-		size ++ ;
 	}
 
 	/**
