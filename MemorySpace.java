@@ -61,7 +61,7 @@ public class MemorySpace {
 		if (this.freeList.getSize() == 0 || freeList == null) {
 			return -1;
 		}
-		Node current = this.freeList.getNode(0);
+		Node current = this.freeList.getFirst();
 		while (current != null) {
 			if (current.block.length >= length) {
 				MemoryBlock toAllocate = new MemoryBlock(current.block.baseAddress, length);
