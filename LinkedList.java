@@ -89,11 +89,11 @@ public class LinkedList {
 		}
 		if (index == 0) {
 			addFirst(block);
-		} else if (index == this.size - 1) {
+		} else if (index == this.size) {
 			addLast(block);
 		} else {
 			Node current = first;
-			while (index > 0) {
+			while (index > 1) {
 				current = current.next;
 				index -- ;
 			}
