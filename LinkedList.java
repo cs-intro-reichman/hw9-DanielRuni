@@ -101,6 +101,7 @@ public class LinkedList {
 			toAdd.next = current.next;
 			current.next = toAdd;
 		}
+		size ++ ;
 	}
 
 	/**
@@ -119,6 +120,7 @@ public class LinkedList {
 			last.next = toAdd;
 			last = toAdd;
 		}
+		size ++ ;
 	}
 	
 	/**
@@ -137,6 +139,7 @@ public class LinkedList {
 			toAdd.next = this.first;
 			this.first = toAdd;
 		}
+		size ++ ;
 	}
 
 	/**
@@ -155,6 +158,7 @@ public class LinkedList {
 		Node current = this.first;
 		while (index > 0) {
 			current = current.next;
+			index -- ;
 		}
 		return current.block;
 	}	
@@ -172,6 +176,7 @@ public class LinkedList {
 			if (current.block.equals(block)) {
 				return i;
 			}
+			current = current.next;
 		}
 		return -1;
 	}
@@ -198,6 +203,7 @@ public class LinkedList {
 				return;
 			}
 		}
+		size -- ;
 	}
 
 	/**
@@ -224,6 +230,7 @@ public class LinkedList {
 			index -- ;
 		} 
 		prev.next = prev.next.next;
+		size -- ;
 	}
 
 	/**
@@ -248,6 +255,8 @@ public class LinkedList {
 				prev.next = current.next;
 				return;
 			}
+			prev = current;
+			current = current.next;
 		}
 		throw new IllegalArgumentException("block is not in he list");
 	}	
