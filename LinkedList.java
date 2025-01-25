@@ -171,6 +171,9 @@ public class LinkedList {
 	 * @return the index of the block, or -1 if the block is not in this list
 	 */
 	public int indexOf(MemoryBlock block) {
+		if (size == 0) {
+			return -1;
+		}
 		Node current = this.first;
 		for (int i=0; i<size; i++) {
 			if (current.block.equals(block)) {
