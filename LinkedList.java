@@ -191,7 +191,7 @@ public class LinkedList {
 	 *        the node that will be removed from this list
 	 */
 	public void remove(Node node) {
-		if (size == 0 || node.equals(null)) {
+		if (size == 0 || node == null) {
 			return;
 		} else if (size == 1) {
 			if (this.first.equals(node)) {
@@ -202,6 +202,10 @@ public class LinkedList {
 			} else {
 				return;
 			}
+		} else if (first.equals(node)) {
+			first = first.next;
+			size -- ;
+			return;
 		}
 		Node prev = this.first;
 		Node current = prev.next;
@@ -249,7 +253,7 @@ public class LinkedList {
 	 *         if the given memory block is not in this list
 	 */
 	public void remove(MemoryBlock block) {
-		if (size == 0 || block.equals(null)) {
+		if (size == 0 || block == null) {
 			return;
 		} else if (size == 1) {
 			if (first.block.equals(block)) {
@@ -260,6 +264,10 @@ public class LinkedList {
 			} else {
 				return;
 			}
+		} else if (first.block.equals(block)) {
+			first = first.next;
+			size -- ;
+			return;
 		}
 		Node prev = first;
 		Node current = prev.next;
