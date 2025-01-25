@@ -119,9 +119,10 @@ public class MemorySpace {
 					this.freeList.remove(current);
 					current = prev.next;
 				}
+				prev = current;
+				current = current.next;
 			}
-			prev = current;
-			current = current.next;
+			prev = prev.next;
 		}
 	}
 }
