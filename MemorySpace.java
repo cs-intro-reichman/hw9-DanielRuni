@@ -61,7 +61,7 @@ public class MemorySpace {
 		if (this.freeList.getSize() == 0 || freeList == null) {
 			return -1;
 		}
-		Node current = this.freeList.getFirst();
+		Node current = this.freeList.getNode(0);
 		while (current != null) {
 			if (current.block.length >= length) {
 				MemoryBlock toAllocate = new MemoryBlock(current.block.baseAddress, length);
@@ -69,6 +69,7 @@ public class MemorySpace {
 					this.freeList.remove(current);
 				} else {
 					current.block.baseAddress += length;
+					current.block.length -= length;
 				}
 				this.allocatedList.addLast(toAllocate);
 				return toAllocate.baseAddress;
