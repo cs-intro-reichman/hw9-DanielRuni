@@ -240,6 +240,9 @@ public class LinkedList {
 		if (index == 0) {
 			first = first.next;
 			size -- ;
+			if (size == 0) {
+				last = first;
+			}
 			return;
 		}
 		Node current = first;
@@ -249,6 +252,9 @@ public class LinkedList {
 		}
 		current.next = current.next.next;
 		size --;
+		if (index == size - 1) {
+			last = current;
+		}
 	}
 
 	/**
@@ -260,7 +266,7 @@ public class LinkedList {
 	 */
 	public void remove(MemoryBlock block) {
 		if (block == null) {
-			throw new IllegalArgumentException(" NullPointerException!");
+			throw new IllegalArgumentException(" IllegalArgumentException: index must be between 0 and size");
 		}
 		if (size == 0) {
 			return;
