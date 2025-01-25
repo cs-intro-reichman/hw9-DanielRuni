@@ -235,7 +235,7 @@ public class LinkedList {
 	 */
 	public void remove(int index) {
 		if (index < 0 || index >= size) {
-			throw new IllegalArgumentException(" index must be between 0 and size");
+			throw new IllegalArgumentException("index must be between 0 and size");
 		}
 		if (index == 0) {
 			first = first.next;
@@ -266,14 +266,14 @@ public class LinkedList {
 	 */
 	public void remove(MemoryBlock block) {
 		if (block == null) {
-			throw new IllegalArgumentException(" index must be between 0 and size");
+			throw new IllegalArgumentException(" NullPointerException!");
 		}
 		if (size == 0) {
 			return;
 		} else if (size == 1) {
-			if (first.block.equals(block)) {
-				first = null;
-				last = first;
+			if (this.first.block.equals(block)) {
+				this.first = null;
+				this.last = first;
 				size -- ;
 				return;
 			} else {
@@ -284,7 +284,7 @@ public class LinkedList {
 			size -- ;
 			return;
 		}
-		Node prev = first;
+		Node prev = this.first;
 		Node current = prev.next;
 		while (current != null) {
 			if (current.block.equals(block)) {
