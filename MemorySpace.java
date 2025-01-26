@@ -71,8 +71,8 @@ public class MemorySpace {
 					current.block.baseAddress += length;
 					current.block.length -= length;
 				}
-				this.allocatedList.addLast(toAllocate);
-				return toAllocate.baseAddress;
+				allocatedList.addLast(toAllocate);
+				return allocatedList.getLast().block.baseAddress;
 			}
 			current = current.next;
 		}
