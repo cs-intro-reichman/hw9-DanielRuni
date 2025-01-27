@@ -57,7 +57,7 @@ public class MemorySpace {
 	 *        the length (in words) of the memory block that has to be allocated
 	 * @return the base address of the allocated block, or -1 if unable to allocate
 	 */
-	// public int malloc(int length) {
+	public int malloc(int length) {
 	// 	if (this.freeList == null || this.freeList.getFirst() == null)  {
 	// 		return -1;
 	// 	}
@@ -76,8 +76,8 @@ public class MemorySpace {
 	// 		}
 	// 		current = current.next;
 	// 	}
-	// 	return -1;
-	// }
+		return -1;
+	}
 
 	/**
 	 * Frees the memory block whose base address equals the given address.
