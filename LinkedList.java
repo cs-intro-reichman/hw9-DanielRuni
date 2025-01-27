@@ -111,6 +111,7 @@ public class LinkedList {
 	 * @param block
 	 *        the given memory block
 	 */
+	
 	public void addLast(MemoryBlock block) {
 		if (size == 0) {
 			this.first = new Node(block);
