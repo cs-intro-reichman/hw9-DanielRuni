@@ -57,27 +57,27 @@ public class MemorySpace {
 	 *        the length (in words) of the memory block that has to be allocated
 	 * @return the base address of the allocated block, or -1 if unable to allocate
 	 */
-	public int malloc(int length) {
-		if (this.freeList == null || this.freeList.getFirst() == null)  {
-			return -1;
-		}
-		Node current = this.freeList.getFirst();
-		while (current != null) {
-			if (current.block.length >= length) {
-				MemoryBlock toAllocate = new MemoryBlock(current.block.baseAddress, length);
-				allocatedList.addLast(toAllocate);
-				if (current.block.length == length) {
-					this.freeList.remove(current);
-				} else {
-					current.block.baseAddress += length;
-					current.block.length -= length;
-				}
-				return allocatedList.getLast().block.baseAddress;
-			}
-			current = current.next;
-		}
-		return -1;
-	}
+	// public int malloc(int length) {
+	// 	if (this.freeList == null || this.freeList.getFirst() == null)  {
+	// 		return -1;
+	// 	}
+	// 	Node current = this.freeList.getFirst();
+	// 	while (current != null) {
+	// 		if (current.block.length >= length) {
+	// 			MemoryBlock toAllocate = new MemoryBlock(current.block.baseAddress, length);
+	// 			allocatedList.addLast(toAllocate);
+	// 			if (current.block.length == length) {
+	// 				this.freeList.remove(current);
+	// 			} else {
+	// 				current.block.baseAddress += length;
+	// 				current.block.length -= length;
+	// 			}
+	// 			return allocatedList.getLast().block.baseAddress;
+	// 		}
+	// 		current = current.next;
+	// 	}
+	// 	return -1;
+	// }
 
 	/**
 	 * Frees the memory block whose base address equals the given address.
