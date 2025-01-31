@@ -3,7 +3,7 @@
  * memory blocks, and a list free memory blocks. The methods "malloc" and "free" are 
  * used, respectively, for creating new blocks and recycling existing blocks.
  */
-public class MemorySpace {
+public class MemorySpaceNew {
 	
 	// A list of the memory blocks that are presently allocated
 	private LinkedList allocatedList;
@@ -17,7 +17,7 @@ public class MemorySpace {
 	 * @param maxSize
 	 *            the size of the memory space to be managed
 	 */
-	public MemorySpace(int maxSize) {
+	public MemorySpaceNew(int maxSize) {
 		// initiallizes an empty list of allocated blocks.
 		allocatedList = new LinkedList();
 	    // Initializes a free list containing a single block which represents
@@ -57,25 +57,26 @@ public class MemorySpace {
 	 *        the length (in words) of the memory block that has to be allocated
 	 * @return the base address of the allocated block, or -1 if unable to allocate
 	 */
-	public int malloc(int length) {
-		if (this.freeList == null || this.freeList.getFirst() == null)  {
-			return -1;
-		}
-		Node current = this.freeList.getFirst();
-		while (current != null) {
-			if (current.block.length >= length) {
-				MemoryBlock toAllocate = new MemoryBlock(current.block.baseAddress, length);
-				allocatedList.addLast(toAllocate);
-				if (current.block.length == length) {
-					this.freeList.remove(current);
-				} else {
-					current.block.baseAddress += length;
-					current.block.length -= length;
-				}
-				return allocatedList.getLast().block.baseAddress;
+	public int malloc(int length) {		
+		Node node = freeList.getNode(0);
+		MemoryBlock freeBlock; 
+		while (node != null) {
+			freeBlock = node.block;
+			if (freeBlock.length > length) {
+				MemoryBlock newBlock = new MemoryBlock(freeBlock.baseAddress, length);
+				allocatedList.addLast(newBlock);
+				freeBlock.length = freeBlock.length - length;
+				freeBlock.baseAddress = freeBlock.baseAddress + length;
+				return newBlock.baseAddress;
 			}
-			current = current.next;
+			if (freeBlock.length == length) {
+				allocatedList.addLast(freeBlock);
+				freeList.remove(freeBlock);
+				return freeBlock.baseAddress;
+			}
+			node = node.next;
 		}
+		// No block was allocated:
 		return -1;
 	}
 
@@ -88,13 +89,17 @@ public class MemorySpace {
 	 *            the starting address of the block to freeList
 	 */
 	public void free(int address) {
-		Node current = this.allocatedList.getFirst();
-		while (current.block.baseAddress != address) {
-			current = current.next;
+		MemoryBlock allocatedBlock;
+		Node node = allocatedList.getNode(0);
+		while (node != null) {
+		    allocatedBlock = node.block;
+			if (allocatedBlock.baseAddress == address) {
+				freeList.addLast(allocatedBlock);
+				allocatedList.remove(allocatedBlock);
+				return;
+			}
+			node = node.next;
 		}
-		MemoryBlock toFree = new MemoryBlock(current.block.baseAddress, current.block.length);
-		this.freeList.addLast(toFree);
-		this.allocatedList.remove(toFree);
 	}
 	
 	/**
@@ -111,22 +116,60 @@ public class MemorySpace {
 	 * In this implementation Malloc does not call defrag.
 	 */
 	public void defrag() {
-		Node prev = this.freeList.getFirst();
-		if (this.freeList.getSize() < 2) {
-			return;
-		}
-		Node current = prev.next;
-		while (prev != null) {
-			while (current != null) {
-				if (prev.block.baseAddress + prev.block.length == current.block.baseAddress) {
-					prev.block.length += current.block.length;
-					this.freeList.remove(current);
-					prev = this.freeList.getFirst();
-					current = prev;
+		LinkedList remove = new LinkedList();
+		ListIterator it = freeList.iterator();
+		while(it.hasNext()){
+			MemoryBlock curr = it.next();
+			boolean flag = true;
+			while(flag){
+				flag = false;
+				ListIterator it2 = freeList.iterator();
+				while(it2.hasNext()){
+					MemoryBlock next = it2.next();
+					if(curr.baseAddress + curr.length == next.baseAddress){
+						if (remove.indexOf(next) == -1){
+							remove.addLast(next);
+						}
+						curr.length = curr.length + next.length;
+						flag = true;
+						break;
+					}
 				}
-				current = current.next;
 			}
-			prev = prev.next;
 		}
+		it = remove.iterator();
+		while(it.hasNext()) {
+			freeList.remove(it.next());
+		}
+	}
+
+	public static void main(String[] args) {
+		MemorySpaceNew memory = new MemorySpaceNew(100);
+		// System.out.println(memory.malloc(40)); // 0
+		// System.out.println(memory.malloc(40)); // 10
+		// System.out.println(memory.malloc(30)); // 10
+		int address = memory.malloc(5);
+		int address1 = memory.malloc(20);
+		int address2 = memory.malloc(20);
+		int address3 = memory.malloc(55);
+		System.out.println(address);
+		System.out.println(address1);
+		System.out.println(address2);
+		System.out.println(address3);
+		System.out.println(memory);
+		System.out.println();
+		memory.free(address);
+		memory.free(address1);
+		memory.free(address2);
+		System.out.println(memory);
+		System.out.println();
+		memory.defrag();
+		System.out.println(memory);
+		// int address4 = memory.malloc(15);
+		// System.out.println(address4);
+		// System.out.println(memory);
+		// int address3 = memory.malloc(10);
+		
+		// System.out.println(memory);
 	}
 }

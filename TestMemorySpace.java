@@ -17,13 +17,13 @@ public class TestMemorySpace {
     }
 
     private static void testInitialization() {
-        MemorySpace memory = new MemorySpace(100);
+        MemorySpaceNew memory = new MemorySpaceNew(100);
         String expected = "(0 , 100)\n";
         assertString(expected, memory.toString(), "Initialization");
     }
 
     private static void testSimpleAllocation() {
-        MemorySpace memory = new MemorySpace(100);
+        MemorySpaceNew memory = new MemorySpaceNew(100);
         int address = memory.malloc(20);
         assertEqual(0, address, "Simple allocation address");
 
@@ -32,7 +32,7 @@ public class TestMemorySpace {
     }
 
     private static void testMultipleAllocations() {
-        MemorySpace memory = new MemorySpace(100);
+        MemorySpaceNew memory = new MemorySpaceNew(100);
         int addr1 = memory.malloc(20);
         int addr2 = memory.malloc(30);
         int addr3 = memory.malloc(40);
@@ -46,7 +46,7 @@ public class TestMemorySpace {
     }
 
     private static void testAllocationFailure() {
-        MemorySpace memory = new MemorySpace(100);
+        MemorySpaceNew memory = new MemorySpaceNew(100);
         memory.malloc(60);
         int address = memory.malloc(50);
         assertEqual(-1, address, "Allocation failure");
@@ -56,7 +56,7 @@ public class TestMemorySpace {
     }
 
     private static void testFree() {
-        MemorySpace memory = new MemorySpace(100);
+        MemorySpaceNew memory = new MemorySpaceNew(100);
         int addr1 = memory.malloc(20);
         memory.malloc(30);
         memory.free(addr1);
@@ -66,7 +66,7 @@ public class TestMemorySpace {
     }
 
     private static void testDefrag() {
-        MemorySpace memory = new MemorySpace(100);
+        MemorySpaceNew memory = new MemorySpaceNew(100);
         memory.malloc(20);
         memory.malloc(20);
         int addr3 = memory.malloc(20);
@@ -84,7 +84,7 @@ public class TestMemorySpace {
     }
 
     private static void testComplexScenario() {
-        MemorySpace memory = new MemorySpace(100);
+        MemorySpaceNew memory = new MemorySpaceNew(100);
         memory.malloc(20); // Allocates at address 0
         int addr2 = memory.malloc(20); // Allocates at address 20
         memory.malloc(20); // Allocates at address 40

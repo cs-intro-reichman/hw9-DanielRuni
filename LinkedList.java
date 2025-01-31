@@ -318,6 +318,7 @@ public class LinkedList {
 		Node current = this.first;
 		while (current != null) {
 			str += current + ", ";
+			current = current.next;
 		}
 		return str;
 	}

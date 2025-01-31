@@ -9,7 +9,7 @@
  */
 public class LinkedListTest {
 	public static void main (String[] args) {
-		MemorySpace m = new MemorySpace(1000);
+		MemorySpaceNew m = new MemorySpaceNew(1000);
 		System.out.println(m + "\n");
 		//// Expected output:
 		//// (0 , 1000) 
