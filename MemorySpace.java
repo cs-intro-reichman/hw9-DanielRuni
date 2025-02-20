@@ -88,6 +88,9 @@ public class MemorySpace {
 	 *            the starting address of the block to freeList
 	 */
 	public void free(int address) {
+		if (address <= 0) {
+			throw new IllegalArgumentException("index must be between 0 and size");
+		}
 		if (this.allocatedList == null) {
 			return;
 		}
