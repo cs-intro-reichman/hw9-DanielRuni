@@ -88,7 +88,7 @@ public class MemorySpace {
 	 *            the starting address of the block to freeList
 	 */
 	public void free(int address) {
-		if (this.freeList == null) {
+		if (this.allocatedList == null) {
 			return;
 		}
 		Node current = this.allocatedList.getFirst();
