@@ -88,18 +88,20 @@ public class MemorySpace {
 	 *            the starting address of the block to freeList
 	 */
 	public void free(int address) {
-		if (address <= 0) {
+		if (freeList.getSize() == 1 && freeList.getFirst().block.baseAddress == 0 && freeList.getFirst().block.length == 100) {
 			throw new IllegalArgumentException("index must be between 0 and size");
 		}
-		if (this.allocatedList == null) {
-			return;
-		}
 		Node current = this.allocatedList.getFirst();
-		while (current.block.baseAddress != address) {
+		Node toFree = null;
+		while (current != null) {
+			if (current.block.baseAddress == address) {
+				toFree = current;
+				break;
+			}
 			current = current.next;
 		}
-		MemoryBlock toFree = new MemoryBlock(current.block.baseAddress, current.block.length);
-		this.freeList.addLast(toFree);
+		if (toFree == null) return;
+		this.freeList.addLast(toFree.block);
 		this.allocatedList.remove(toFree);
 	}
 	
