@@ -1,3 +1,4 @@
+
 public enum TesterQuestionEnum {
     LINKED_LIST_ADD_FIRST("LinkedList class. addFirst", 6),
     LINKED_LIST_ADD_LAST("LinkedList class. addLast", 6),

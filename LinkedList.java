@@ -314,12 +314,12 @@ public class LinkedList {
 	 * A textual representation of this list, for debugging.
 	 */
 	public String toString() {
-		String str = "(";
-		Node current = this.first;
+		String s = "";
+		Node current = first;
 		while (current != null) {
-			str += current + ", ";
+			s = s + current.block + " ";
 			current = current.next;
 		}
-		return str;
+		return s;
 	}
 }

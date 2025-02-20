@@ -61,7 +61,7 @@ public class MemorySpace {
 		if (this.freeList == null || this.freeList.getFirst() == null)  {
 			return -1;
 		}
-		Node current = this.freeList.getFirst();
+		Node current = freeList.getFirst();
 		while (current != null) {
 			if (current.block.length >= length) {
 				MemoryBlock toAllocate = new MemoryBlock(current.block.baseAddress, length);
@@ -72,7 +72,7 @@ public class MemorySpace {
 					current.block.baseAddress += length;
 					current.block.length -= length;
 				}
-				return allocatedList.getLast().block.baseAddress;
+				return toAllocate.baseAddress;
 			}
 			current = current.next;
 		}
@@ -111,12 +111,13 @@ public class MemorySpace {
 	 * In this implementation Malloc does not call defrag.
 	 */
 	public void defrag() {
-		Node prev = this.freeList.getFirst();
 		if (this.freeList.getSize() < 2) {
 			return;
 		}
+		Node prev = this.freeList.getFirst();
 		Node current = prev.next;
 		while (prev != null) {
+			current = this.freeList.getFirst();
 			while (current != null) {
 				if (prev.block.baseAddress + prev.block.length == current.block.baseAddress) {
 					prev.block.length += current.block.length;
